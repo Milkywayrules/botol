@@ -20,14 +20,14 @@
                             <label class="col-md-12 text-md-left font-weight-bold mb-0" for="penjualan">Pilih Mode</label>
                             <div class="col-md-12">
                                 <div class="custom-control custom-checkbox">
-                                    <input value="all" type="checkbox" id="all" name="all" class="custom-control-input">
-                                    <label class="custom-control-label" for="all">Tampilkan omzet seluruh customer/toko? <small class="text-danger ml-2">Jika opsi ini dipilih, tidak usah memilih satu pun customer di bawah</small></label>
+                                    <input value="all" type="checkbox" id="all" name="all" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="all">Tampilkan omzet keseluruhan? <small class="text-danger ml-2">Jika opsi ini dipilih, tidak usah memilih satu pun customer di bawah</small></label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row form-group mx-5">
-                            <label class="col-md-12 text-md-left font-weight-bold mb-0" for="penjualan">Pilih Customer</label>
+                            <label class="col-md-12 text-md-left font-weight-bold mb-0" for="penjualan">Pilih Nama Customer</label>
                             <?php 
                             $i = 0;
                             foreach($customer as $row) : ?>
@@ -68,21 +68,21 @@
             </div>
             <div class="tab-pane fade" id="perproduk" role="tabpanel" aria-labelledby="perproduk-tab">
 
-            <div class="card shadow-sm border-bottom-primary">
+                <div class="card shadow-sm border-bottom-primary">
                     <div class="card-body">
                         <?= $this->session->flashdata('pesan'); ?>
                         <?= form_open('', '', ['menu' => 'perproduk']); ?>
                         
                         <div class="row form-group mx-5 mt-4">
-                            <label class="col-lg-12 text-lg-left font-weight-bold mb-0" for="tanggal">Pilih Rentang Tanggal</label>
+                            <label class="col-lg-12 text-lg-left font-weight-bold mb-0" for="tanggal-2">Pilih Rentang Tanggal</label>
                             <div class="col-lg-5">
                                 <div class="input-group">
-                                    <input value="<?= set_value('tanggal'); ?>" name="tanggal" id="tanggal" type="text" class="form-control" placeholder="Periode Tanggal">
+                                    <input value="<?= set_value('tanggal-2'); ?>" name="tanggal-2" id="tanggal-2" type="text" class="form-control" placeholder="Periode Tanggal">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-fw fa-calendar"></i></span>
                                     </div>
                                 </div>
-                                <?= form_error('tanggal', '<small class="text-danger">', '</small>'); ?>
+                                <?= form_error('tanggal-2', '<small class="text-danger">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="row form-group mx-5 mt-4">

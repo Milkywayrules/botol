@@ -66,11 +66,11 @@ function pprintd($input)
 
 function price_format($int = 0, $nbsp = TRUE, $echo = NULL)
 {
-if ($nbsp === TRUE) $x = "Rp.&nbsp;".number_format($int, 0, '', '.');
-if ($nbsp === FALSE) $x = "Rp.".number_format($int, 0, '', '.');
+    if ($nbsp === TRUE) $x = "Rp.&nbsp;".number_format($int, 0, '', '.');
+    if ($nbsp === FALSE) $x = "Rp.".number_format($int, 0, '', '.');
 
-if ($echo === NULL) echo $x;
-if ($echo !== NULL) return $x;
+    if ($echo !== NULL) echo $x;
+    if ($echo === NULL) return $x;
 }
 
 function base64url_encode($data) {

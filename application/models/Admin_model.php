@@ -57,8 +57,34 @@ class Admin_model extends CI_Model
         // $this->db->group_by('bk.id_barang_keluar', 'DESC');
     }
 
-    public function getOmzet($where = null, $range = null, $limit = null)
+    public function getOmzet($where = null, $range = null, $limit = null, $getTotal = null)
     {
+        if ($getTotal != null) {
+            if ($getTotal['mode'] == 'omzet') {
+                return $this->db->query("
+                    SELECT SUM(`paid_amount`) AS total_omzet
+                    FROM `barang_keluar` `bk` 
+                    JOIN `user` `u` 
+                    ON `bk`.`user_id` = `u`.`id_user` 
+                    JOIN `customer` `c` 
+                    ON `bk`.`id_customer` = `c`.`id` 
+                    WHERE `tanggal_keluar` >= '{$range['mulai']}'
+                    AND `tanggal_keluar` <= '{$range['akhir']}'
+                ")->row_array();
+            } elseif ($getTotal['mode'] == 'perproduk') {
+                return $this->db->query("
+                    SELECT `bkd`.`barang_id`, `b`.`nama_barang`, SUM(`bkd`.`total_nominal_dtl`) AS `total_omzet`
+                    FROM `barang_keluar_dtl` `bkd`
+                    JOIN `barang` `b`
+                    ON `bkd`.`barang_id` = `b`.`id_barang`
+                    JOIN `barang_keluar` `bk`
+                    ON `bkd`.`id_barang_keluar` = `bk`.`id_barang_keluar`
+                    WHERE `tanggal_keluar` >= '{$range['mulai']}'
+                    AND `tanggal_keluar` <= '{$range['akhir']}'
+                    GROUP BY `bkd`.`barang_id`
+                ")->result_array();
+            }
+        }
         $this->db->join('user u', 'bk.user_id = u.id_user');
         $this->db->join('customer c', 'bk.id_customer = c.id');
         $this->db->order_by('cust_id', 'DESC');
