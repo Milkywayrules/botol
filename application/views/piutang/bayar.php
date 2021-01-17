@@ -105,7 +105,7 @@
                     <label class="col-md-4 text-md-right" for="grand_total">Grand Total</label>
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input value="<?= set_value('grand_total', price_format($piutang['grand_total'])); ?>" name="grand_total" id="grand_total" type="text" class="form-control" disabled>
+                            <input value="<?= set_value('grand_total', price_format($piutang['grand_total']), TRUE, TRUE); ?>" name="grand_total" id="grand_total" type="text" class="form-control" disabled>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                     <label class="col-md-4 text-md-right" for="paid_amount">Jumlah Yang Sudah Dibayarkan</label>
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input value="<?= set_value('paid_amount', price_format($piutang['paid_amount'])); ?>" name="paid_amount" id="paid_amount" type="text" class="form-control" disabled>
+                            <input value="<?= set_value('paid_amount', price_format($piutang['paid_amount']), TRUE, TRUE); ?>" name="paid_amount" id="paid_amount" type="text" class="form-control" disabled>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                     <label class="col-md-4 text-md-right" for="left_to_paid">Sisa Yang Harus Dibayar (Utang)</label>
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input value="<?= set_value('left_to_paid', price_format($piutang['left_to_paid'])); ?>" name="left_to_paid" id="left_to_paid" type="text" class="form-control" disabled>
+                            <input value="<?= set_value('left_to_paid', price_format($piutang['left_to_paid']), TRUE, TRUE); ?>" name="left_to_paid" id="left_to_paid" type="text" class="form-control" disabled>
                         </div>
                     </div>
                 </div>

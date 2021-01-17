@@ -35,7 +35,7 @@ class Piutang extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title']      = "Piutang";
             $data['piutang']    = $this->admin->getPiutang(['bk.id_barang_keluar' => $id]);
-            $this->template->load('templates/dashboard', 'piutang/edit', $data);
+            $this->template->load('templates/dashboard', 'piutang/bayar', $data);
         } else {
             $input = $this->input->post(null, true);
             $input['paid_utang'] = (int)str_replace(',', '', str_replace('.', '', $input['paid_utang']));
@@ -68,7 +68,7 @@ class Piutang extends CI_Controller
                 redirect('piutang');
             } else {
                 set_pesan('data gagal diedit.');
-                redirect('piutang/edit/' . $id);
+                redirect('piutang/bayar/' . $id);
             }
         }
     }
