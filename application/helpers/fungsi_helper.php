@@ -49,6 +49,8 @@ function output_json($data)
     $ci->output->set_content_type('application/json')->set_output($data);
 }
 
+// 
+
 function pprint($input)
 {
     echo "<pre>";
@@ -60,4 +62,28 @@ function pprintd($input)
     echo "<pre>";
     print_r($input);
     die;
+}
+
+function price_format($int = 0, $nbsp = TRUE, $echo = NULL)
+{
+if ($nbsp === TRUE) $x = "Rp.&nbsp;".number_format($int, 0, '', '.');
+if ($nbsp === FALSE) $x = "Rp.".number_format($int, 0, '', '.');
+
+if ($echo === NULL) echo $x;
+if ($echo !== NULL) return $x;
+}
+
+function base64url_encode($data) {
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+  }
+  
+function base64url_decode($data) {
+return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+}
+
+function getLastSegment()
+{
+    $ci     = get_instance();
+    $last   = $ci->uri->total_segments();
+    return $ci->uri->segment($last);
 }

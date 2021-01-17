@@ -34,6 +34,29 @@ class Admin_model extends CI_Model
         $this->db->update('barang', $data);
     }
 
+    public function getPiutang($where = null, $limit = null, $range = null)
+    {
+        $this->db->join('user u', 'bk.user_id = u.id_user');
+        $this->db->join('customer c', 'bk.id_customer = c.id');
+        $this->db->order_by('bk.id_barang_keluar', 'DESC');
+        if ($where != null) {
+            $this->db->select('bk.id_barang_keluar, bk.tanggal_keluar, u.nama, c.fullname, c.phone, c.address, bk.nama_penerima, bk.alamat, bk.grand_total, bk.paid_amount, bk.left_to_paid, bk.payment');
+            $this->db->where($where);
+            return $this->db->get_where('barang_keluar bk', 'bk.left_to_paid > 0')->row_array();
+        } else {
+            $this->db->select('bk.id_barang_keluar, bk.nama_penerima, bk.alamat, bk.tanggal_keluar, bk.payment, bk.grand_total, bk.left_to_paid, u.nama, c.fullname, c.phone');
+            return $this->db->get_where('barang_keluar bk', 'bk.left_to_paid > 0')->result_array();
+        }
+        // if ($limit != null) {
+        //     $this->db->limit($limit);
+        // }
+        // if ($range != null) {
+        //     $this->db->where('tanggal_keluar' . ' >=', $range['mulai']);
+        //     $this->db->where('tanggal_keluar' . ' <=', $range['akhir']);
+        // }
+        // $this->db->group_by('bk.id_barang_keluar', 'DESC');
+    }
+
     public function getUsers($id)
     {
         /**

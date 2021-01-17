@@ -133,6 +133,22 @@ $segment = $this->uri->segment(1);
 
             <!-- Heading -->
             <div class="sidebar-heading">
+                Keuangan
+            </div>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item <?= ($segment == 'piutang') ? "active":"" ?>">
+                <a class="nav-link" href="<?= base_url('piutang'); ?>">
+                    <i class="fas fa-fw fa-money-bill-wave"></i>
+                    <span>Piutang</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
                 Report
             </div>
 
@@ -309,53 +325,77 @@ $segment = $this->uri->segment(1);
     <script src="<?= base_url(); ?>assets/vendor/gijgo/js/gijgo.min.js"></script>
     <!-- <script src="<?= base_url('assets/vendor/select2/select2/dist/js/select2.min.js') ?>"></script> -->
 
-
-
-    <script>
-        // Add dot(s) automagically to input text
-        $('#paid_amount').on("keyup", function(event) {
-            let maxLength = 10;
-            var selection = window.getSelection().toString();
-
-            // kalo buat pilihan atau pencet panah, maka keluar
-            if (selection !== '') return;
-            if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) return;
-
-            // ambil value skrg di inputan
-            var $this = $(this);
-            var inputz = $this.val();
-
-            // replace sama kosong kalo selain Digits
-            var inputz = inputz.replace(/[\D\s\._\-]+/g, "");
-
-            // kalo panjangnya lebih dari maxLength, maka ambil sejumlah maxLength
-            if (inputz.length > maxLength) inputz = inputz.substr(0, maxLength);
-
-            // jaddiin integer
-            inputz = inputz ? parseInt(inputz, 10) : 0;
-
-            $this.val(function() {
-                // format ke INDONESIA = id-ID
-                return (inputz === 0) ? "" : inputz.toLocaleString("id-ID");
+    <?php
+    if ($this->uri->segment(1) == 'piutang') : ?>
+        <script>
+            // Add dot(s) automagically to input text
+            $('#paid_utang').on("keyup", function(event) {
+                let maxLength = 10;
+                var selection = window.getSelection().toString();
+                // kalo buat pilihan atau pencet panah, maka keluar
+                if (selection !== '') return;
+                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) return;
+                // ambil value skrg di inputan
+                var $this = $(this);
+                var inputz = $this.val();
+                // replace sama kosong kalo selain Digits
+                var inputz = inputz.replace(/[\D\s\._\-]+/g, "");
+                // kalo panjangnya lebih dari maxLength, maka ambil sejumlah maxLength
+                if (inputz.length > maxLength) inputz = inputz.substr(0, maxLength);
+                // jaddiin integer
+                inputz = inputz ? parseInt(inputz, 10) : 0;
+                $this.val(function() {
+                    // format ke INDONESIA = id-ID
+                    return (inputz === 0) ? "" : inputz.toLocaleString("id-ID");
+                });
             });
-        });
+        </script>
+    <?php endif; ?>
 
-        // untuk modal pada konfirmasi kasir (tipe bayar)
-        let kontrabon = $("#kontrabon")
-        let transfer = $("#transfer")
-        let cash = $("#cash")
-        let paymentCashInput = $(".payment_cash")
+    <?php
+    if ($this->uri->segment(1) == 'barangkeluar') : ?>
+        <script>
+            // Add dot(s) automagically to input text
+            $('#paid_amount').on("keyup", function(event) {
+                let maxLength = 10;
+                var selection = window.getSelection().toString();
+                // kalo buat pilihan atau pencet panah, maka keluar
+                if (selection !== '') return;
+                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) return;
+                // ambil value skrg di inputan
+                var $this = $(this);
+                var inputz = $this.val();
+                // replace sama kosong kalo selain Digits
+                var inputz = inputz.replace(/[\D\s\._\-]+/g, "");
+                // kalo panjangnya lebih dari maxLength, maka ambil sejumlah maxLength
+                if (inputz.length > maxLength) inputz = inputz.substr(0, maxLength);
+                // jaddiin integer
+                inputz = inputz ? parseInt(inputz, 10) : 0;
+                $this.val(function() {
+                    // format ke INDONESIA = id-ID
+                    return (inputz === 0) ? "" : inputz.toLocaleString("id-ID");
+                });
+            });
 
-        $(cash).on("click", function() {
-            paymentCashInput.fadeIn()
-        })
-        $(kontrabon).on("click", function() {
-            paymentCashInput.fadeOut()
-        })
-        $(transfer).on("click", function() {
-            paymentCashInput.fadeOut()
-        })
-    </script>
+            // untuk modal pada konfirmasi kasir (tipe bayar)
+            let kontrabon = $("#kontrabon")
+            let transfer = $("#transfer")
+            let cash = $("#cash")
+            let paymentCashInput = $(".payment_cash")
+
+            $(cash).on("click", function() {
+                paymentCashInput.fadeIn()
+            })
+            $(kontrabon).on("click", function() {
+                paymentCashInput.fadeOut()
+            })
+            $(transfer).on("click", function() {
+                paymentCashInput.fadeOut()
+            })
+        </script>
+    <?php endif; ?>
+
+
     <script type="text/javascript">
         $(function() {
             $('.date').datepicker({
@@ -390,6 +430,7 @@ $segment = $this->uri->segment(1);
 
         $(document).ready(function() {
             var table = $('#dataTable').DataTable({
+                "pageLength": 10,
                 buttons: ['copy', 'csv', 'print', 'excel', 'pdf'],
                 dom: "<'row px-2 px-md-4 pt-2'<'col-md-3'l><'col-md-5 text-center'B><'col-md-4'f>>" +
                     "<'row'<'col-md-12'tr>>" +
