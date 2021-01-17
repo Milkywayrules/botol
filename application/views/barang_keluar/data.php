@@ -52,9 +52,9 @@
                             <td><?= $bk['alamat']; ?></td>
                             <!-- <td><?= $bk['jumlah_keluar'] . ' ' . $bk['nama_satuan']; ?></td> -->
                             <td><?= $bk['nama_user']; ?></td>
-                            <td><?= 'Rp '.number_format($bk['total_nominal']);?></td>
-                            <td><?= 'Rp '.number_format($bk['diskon']);?></td>
-                            <td><?= 'Rp '.number_format($bk['grand_total']);?></td>
+                            <td><?= price_format($bk['total_nominal']) ?></td>
+                            <td><?= price_format($bk['diskon']) ?></td>
+                            <td><?= price_format($bk['grand_total']) ?></td>
                             <td>
                                 <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
                                 <a onclick="return confirm('Cetak surat jalan?')" href="<?= base_url('barangkeluar/faktur_surat_jalan/') . $bk['id_barang_keluar'] ?>" class="btn btn-success btn-circle btn-sm"><i class="fa fa-car"></i></a>

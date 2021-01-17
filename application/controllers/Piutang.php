@@ -25,27 +25,8 @@ class Piutang extends CI_Controller
         $this->form_validation->set_rules('paid_utang', 'Nominal Pembayaran', 'required|trim');
     }
 
-    public function add()
-    {
-        $this->_validasi();
-        if ($this->form_validation->run() == false) {
-            $data['title'] = "Piutang";
-            $this->template->load('templates/dashboard', 'piutang/add', $data);
-        } else {
-            $input = $this->input->post(null, true);
-            $save = $this->admin->insert('piutang', $input);
-            if ($save) {
-                set_pesan('data berhasil disimpan.');
-                redirect('piutang');
-            } else {
-                set_pesan('data gagal disimpan', false);
-                redirect('piutang/add');
-            }
-        }
-    }
 
-
-    public function edit($getId)
+    public function bayar($getId)
     {
         $getId = base64_decode($getId);
         $id = encode_php_tags($getId);
@@ -90,16 +71,5 @@ class Piutang extends CI_Controller
                 redirect('piutang/edit/' . $id);
             }
         }
-    }
-
-    public function delete($getId)
-    {
-        $id = encode_php_tags($getId);
-        if ($this->admin->delete('piutang', 'id_piutang', $id)) {
-            set_pesan('data berhasil dihapus.');
-        } else {
-            set_pesan('data gagal dihapus.', false);
-        }
-        redirect('piutang');
     }
 }

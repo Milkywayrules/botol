@@ -57,6 +57,26 @@ class Admin_model extends CI_Model
         // $this->db->group_by('bk.id_barang_keluar', 'DESC');
     }
 
+    public function getOmzet($where = null, $range = null, $limit = null)
+    {
+        $this->db->join('user u', 'bk.user_id = u.id_user');
+        $this->db->join('customer c', 'bk.id_customer = c.id');
+        $this->db->order_by('cust_id', 'DESC');
+
+        if ($range != null) {
+            $this->db->where('tanggal_keluar' . ' >=', $range['mulai']);
+            $this->db->where('tanggal_keluar' . ' <=', $range['akhir']);
+        }
+
+        if ($where != null) {
+            $this->db->select('bk.id_barang_keluar, bk.tanggal_keluar, u.nama, c.id cust_id, c.fullname, c.phone, c.address, bk.nama_penerima, bk.alamat, bk.grand_total, bk.paid_amount, bk.left_to_paid, bk.payment');
+            return $this->db->get_where('barang_keluar bk', $where)->result_array();
+        } else {
+            $this->db->select('bk.id_barang_keluar, bk.nama_penerima, bk.alamat, bk.tanggal_keluar, bk.payment, bk.grand_total, bk.left_to_paid, u.nama, c.id as cust_id, c.fullname, c.phone');
+            return $this->db->get('barang_keluar bk')->result_array();
+        }
+    }
+
     public function getUsers($id)
     {
         /**

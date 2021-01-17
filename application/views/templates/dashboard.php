@@ -97,7 +97,7 @@ $segment = $this->uri->segment(1);
                 <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-light py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Barang:</h6>
-                        <a class="collapse-item active" href="<?= base_url('satuan'); ?>">Satuan Barang</a>
+                        <a class="collapse-item" href="<?= base_url('satuan'); ?>">Satuan Barang</a>
                         <a class="collapse-item" href="<?= base_url('jenis'); ?>">Jenis Barang</a>
                         <a class="collapse-item" href="<?= base_url('barang'); ?>">Data Barang</a>
                     </div>
@@ -138,9 +138,17 @@ $segment = $this->uri->segment(1);
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item <?= ($segment == 'piutang') ? "active":"" ?>">
-                <a class="nav-link" href="<?= base_url('piutang'); ?>">
+                <a class="nav-link pb-0" href="<?= base_url('piutang'); ?>">
                     <i class="fas fa-fw fa-money-bill-wave"></i>
                     <span>Piutang</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item <?= ($segment == 'penjualan') ? "active":"" ?>">
+                <a class="nav-link" href="<?= base_url('penjualan'); ?>">
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Penjualan</span>
                 </a>
             </li>
 

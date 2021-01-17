@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    Riwayat Data Piutang
+                    Detail Penjualan
                 </h4>
             </div>
             <!-- <div class="col-auto">
@@ -27,7 +27,7 @@
                     <th>No Transaksi</th>
                     <th>Tgl Keluar</th>
                     <th>Nama Cust/Toko</th>
-                    <!-- <th>No. Telp</th> -->
+                    <th>No. Telp</th>
                     <th>Tipe Bayar</th>
                     <th>Grand Total</th>
                     <th>Sisa Utang</th>
@@ -45,7 +45,7 @@
                             <td><?= $row['id_barang_keluar']; ?></td>
                             <td><?= $row['tanggal_keluar']; ?></td>
                             <td><?= $row['fullname']; ?></td>
-                            <!-- <td><?= $row['phone']; ?></td> -->
+                            <td><?= $row['phone']; ?></td>
                             <td><?= $row['payment']; ?></td>
                             <td><?= price_format($row['grand_total']) ?></td>
                             <td><?= price_format($row['left_to_paid']) ?></td>
