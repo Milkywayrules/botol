@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2021 at 04:39 PM
+-- Generation Time: Jan 18, 2021 at 05:48 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -24,8 +24,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_botol`
 --
-CREATE DATABASE IF NOT EXISTS `db_botol` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `db_botol`;
 
 -- --------------------------------------------------------
 
