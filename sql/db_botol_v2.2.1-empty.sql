@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 09:45 AM
+-- Generation Time: Jan 18, 2021 at 10:56 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -50,21 +50,6 @@ CREATE TABLE `barang` (
 --   `jenis_id`
 --       `jenis` -> `id_jenis`
 --
-
---
--- Truncate table before insert `barang`
---
-
-TRUNCATE TABLE `barang`;
---
--- Dumping data for table `barang`
---
-
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `satuan_id`, `jenis_id`, `harga`) VALUES
-('B000001', 'Sapu Terbang', 723, 1, 1, 48000),
-('B000002', 'Aqua 250ml', 2877, 2, 3, 5000),
-('B000003', 'VIT 1000ml', 2805, 2, 3, 7000),
-('B000004', 'Kokopian', 889, 1, 3, 32500);
 
 -- --------------------------------------------------------
 

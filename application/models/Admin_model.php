@@ -218,7 +218,7 @@ class Admin_model extends CI_Model
             $this->db->where('tanggal_keluar' . ' >=', $range['mulai']);
             $this->db->where('tanggal_keluar' . ' <=', $range['akhir']);
         }
-        // $this->db->group_by('bk.id_barang_keluar', 'DESC');
+        $this->db->group_by('bk.id_barang_keluar', 'DESC');
         $this->db->order_by('bk.id_barang_keluar', 'DESC');
         return $this->db->get('barang_keluar_dtl bkd')->result_array();
     }
