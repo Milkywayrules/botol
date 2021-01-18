@@ -164,7 +164,7 @@ class Barangkeluar extends CI_Controller
         );
         // var_dump($data);
         $this->cart->insert($data);
-        redirect('Barangkeluar/add');
+        redirect('barangkeluar/add');
         }
     }
 
@@ -174,7 +174,7 @@ class Barangkeluar extends CI_Controller
                'rowid'      => $row_id,
                'qty'     => 0
             ));
-        redirect('Barangkeluar/add');
+        redirect('barangkeluar/add');
     }
 
     public function delete($getId)

@@ -393,12 +393,15 @@ $segment = $this->uri->segment(1);
 
             $(cash).on("click", function() {
                 paymentCashInput.fadeIn()
+                console.log('cash');
             })
             $(kontrabon).on("click", function() {
                 paymentCashInput.fadeOut()
+                console.log('bon');
             })
             $(transfer).on("click", function() {
                 paymentCashInput.fadeOut()
+                console.log('tf');
             })
         </script>
     <?php endif; ?>
