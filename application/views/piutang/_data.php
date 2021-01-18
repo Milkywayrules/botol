@@ -4,19 +4,19 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    Riwayat Data Barang Keluar
+                    Riwayat Data Piutang
                 </h4>
             </div>
-            <div class="col-auto">
+            <!-- <div class="col-auto">
                 <a href="<?= base_url('barangkeluar/add') ?>" class="btn btn-sm btn-primary btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Input Barang Keluar
+                        Input Piutang
                     </span>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="table-responsive">
@@ -26,45 +26,37 @@
                     <th>No. </th>
                     <th>No Transaksi</th>
                     <th>Tgl Keluar</th>
-                    <!-- <th>Nama Barang</th> -->
-                    <th>Nama Penerima</th>
-                    <th>Alamat</th>
-                    <!-- <th>Jumlah Keluar</th> -->
-                    <th>User</th>
-                    <th>Total Awal</th>
-                    <th>Diskon</th>
-                    <th>Total Akhir</th>
+                    <th>Nama Cust/Toko</th>
+                    <!-- <th>No. Telp</th> -->
+                    <th>Tipe Bayar</th>
+                    <th>Grand Total</th>
+                    <th>Sisa Utang</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($barangkeluar) :
-                    foreach ($barangkeluar as $bk) :
+                if ($piutang) :
+                    foreach ($piutang as $row) :
                         ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $bk['id_barang_keluar']; ?></td>
-                            <td><?= $bk['tanggal_keluar']; ?></td>
-                            <!-- <td><?= $bk['nama_barang']; ?></td> -->
-                            <td><?= $bk['nama_penerima']; ?></td>
-                            <td><?= $bk['alamat']; ?></td>
-                            <!-- <td><?= $bk['jumlah_keluar'] . ' ' . $bk['nama_satuan']; ?></td> -->
-                            <td><?= $bk['nama_user']; ?></td>
-                            <td><?= price_format($bk['total_nominal']) ?></td>
-                            <td><?= price_format($bk['diskon']) ?></td>
-                            <td><?= price_format($bk['grand_total']) ?></td>
+                            <td><?= $row['id_barang_keluar']; ?></td>
+                            <td><?= $row['tanggal_keluar']; ?></td>
+                            <td><?= $row['fullname']; ?></td>
+                            <!-- <td><?= $row['phone']; ?></td> -->
+                            <td><?= $row['payment']; ?></td>
+                            <td><?= price_format($row['grand_total']) ?></td>
+                            <td><?= price_format($row['left_to_paid']) ?></td>
                             <td>
-                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
-                                <a onclick="return confirm('Cetak surat jalan?')" href="<?= base_url('barangkeluar/faktur_surat_jalan/') . $bk['id_barang_keluar'] ?>" class="btn btn-success btn-circle btn-sm"><i class="fa fa-car"></i></a>
-                                <a onclick="return confirm('Cetak surat tagihan?')" href="<?= base_url('barangkeluar/faktur_surat_tagihan/') . $bk['id_barang_keluar'] ?>" class="btn btn-success btn-circle btn-sm"><i class="fa fa-book"></i></a>
+                                <a href="<?= base_url('piutang/bayar/') . base64url_encode($row['id_barang_keluar']) ?>" class="btn btn-success btn-sm">Bayar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="10" class="text-center">
+                        <td colspan="7" class="text-center">
                             Data Kosong
                         </td>
                     </tr>

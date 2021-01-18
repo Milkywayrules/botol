@@ -26,7 +26,7 @@
                 <div class="row form-group">
                     <label class="col-md-3 text-md-right" for="nama_satuan">Nama Satuan</label>
                     <div class="col-md-9">
-                        <input value="<?= set_value('nama_satuan'); ?>" name="nama_satuan" id="nama_satuan" type="text" class="form-control" placeholder="Nama Satuan...">
+                        <input value="<?= set_value('nama_satuan'); ?>" name="nama_satuan" id="nama_satuan" type="text" class="form-control" placeholder="Nama Satuan..." autofocus>
                         <?= form_error('nama_satuan', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>

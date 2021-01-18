@@ -33,7 +33,7 @@
                 <div class="row form-group">
                     <label class="col-md-3 text-md-right" for="nama_barang">Nama Barang</label>
                     <div class="col-md-9">
-                        <input value="<?= set_value('nama_barang'); ?>" name="nama_barang" id="nama_barang" type="text" class="form-control" placeholder="Nama Barang...">
+                        <input value="<?= set_value('nama_barang'); ?>" name="nama_barang" id="nama_barang" type="text" class="form-control" placeholder="Nama Barang..." autofocus>
                         <?= form_error('nama_barang', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>

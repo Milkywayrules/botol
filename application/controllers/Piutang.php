@@ -29,39 +29,42 @@ class Piutang extends CI_Controller
     public function bayar($getId)
     {
         $getId = base64_decode($getId);
-        $id = encode_php_tags($getId);
+        $id    = encode_php_tags($getId);
         $this->_validasi();
+        // pprintd($id);
 
         if ($this->form_validation->run() == false) {
             $data['title']      = "Piutang";
-            $data['piutang']    = $this->admin->getPiutang(['bk.id_barang_keluar' => $id]);
+            $data['piutang']    = $this->admin->getPiutang(['id' => $id]);
             $this->template->load('templates/dashboard', 'piutang/bayar', $data);
         } else {
             $input = $this->input->post(null, true);
             $input['paid_utang'] = (int)str_replace(',', '', str_replace('.', '', $input['paid_utang']));
 
             // ada kembalian atau engga
-            if ($input['paid_utang'] > $input['left_to_paid'])
+            if ($input['paid_utang'] > $input['total_utang'])
             {
                 // hitung kembalian
-                $kembalian = $input['paid_utang'] - $input['left_to_paid'];
+                $kembalian = $input['paid_utang'] - $input['total_utang'];
                 // validasi untuk jumlah yg dibayarkan
-                $input['paid_utang'] = $input['left_to_paid'];
+                $input['paid_utang'] = $input['total_utang'];
             }
             // hitung sisa yg harus diabayar (hutang)
-            $input['left_to_paid']  = $input['left_to_paid'] - $input['paid_utang'];
-            $input['paid_amount']   = $input['paid_amount'] + $input['paid_utang'];
+            $input['total_utang']  = $input['total_utang'] - $input['paid_utang'];
+            $input['last_utang_paid'] = unix_to_human(now(), true, 'europe');
+            // $input['paid_amount']   = $input['paid_amount'] + $input['paid_utang'];
 
             // unset paid_amount karena gaakan dimasukin ke db, hanya untuk proses di controller ini
             unset($input['paid_utang']);
 
-            // pprintd($kembalian);
+            // pprintd(price_format($kembalian));
+            // pprintd($input);
             
-            $update = $this->admin->update('barang_keluar', 'id_barang_keluar', $id, $input);
+            $update = $this->admin->update('customer', 'id', $id, $input);
 
             if ($update) {
                 if (isset($kembalian)) {
-                    set_pesan('data berhasil disimpan. <br>TOTAL KEMBALIAN: Rp.' . number_format($kembalian, 0, ',', '.'));
+                    set_pesan('data berhasil disimpan. <br>TOTAL KEMBALIAN: Rp.' . price_format($kembalian));
                 } else {
                     set_pesan('data berhasil disimpan.');
                 }

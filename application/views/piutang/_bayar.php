@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col">
                         <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                            Form Pembayaran Utang Piutang
+                            Form Edit Piutang
                         </h4>
                     </div>
                     <div class="col-auto">
@@ -23,11 +23,12 @@
             <div class="card-body">
                 <?= $this->session->flashdata('pesan'); ?>
                 <?= form_open('', [], [ 
-                        'id' => $piutang['id'], 
-                        'total_utang' => $piutang['total_utang'],
-                        ]); ?>
+                        'id_barang_keluar' => $piutang['id_barang_keluar'], 
+                        'paid_amount' => $piutang['paid_amount'], 
+                        'left_to_paid' => $piutang['left_to_paid'] 
+                    ]); ?>
 
-                <!-- <div class="row form-group">
+                <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="id_barang_keluar">No Transaksi</label>
                     <div class="col-md-8">
                         <div class="input-group">
@@ -52,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="border-bottom my-4 w-75 mx-auto"></div> -->
+                <div class="border-bottom my-4 w-75 mx-auto"></div>
                 
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="fullname">Nama Customer/Toko</label>
@@ -81,7 +82,7 @@
 
                 <div class="border-bottom my-4 w-75 mx-auto"></div>
 
-                <!-- <div class="row form-group">
+                <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="nama_penerima">Nama Penerima</label>
                     <div class="col-md-8">
                         <div class="input-group">
@@ -125,13 +126,13 @@
                     </div>
                 </div>
 
-                <div class="border-bottom my-4 w-75 mx-auto"></div> -->
+                <div class="border-bottom my-4 w-75 mx-auto"></div>
 
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="left_to_paid">Sisa Yang Harus Dibayar (Utang)</label>
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input value="<?= set_value('left_to_paid', price_format($piutang['total_utang']), TRUE, TRUE); ?>" name="left_to_paid" id="left_to_paid" type="text" class="form-control" disabled>
+                            <input value="<?= set_value('left_to_paid', price_format($piutang['left_to_paid']), TRUE, TRUE); ?>" name="left_to_paid" id="left_to_paid" type="text" class="form-control" disabled>
                         </div>
                     </div>
                 </div>

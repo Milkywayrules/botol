@@ -114,24 +114,39 @@ class Barangkeluar extends CI_Controller
             // }
             // pprintd($input);
 
-            $insert = $this->admin->insert('barang_keluar', $input);
+            // ambil data utang si customer
+            $totalUtang = $this->admin->get('customer', ['id' => $input['id_customer']])['total_utang'];
+            // hitung sisa yg harus dibayar (hutang)
+            $utang['total_utang'] = $totalUtang + $input['left_to_paid'];
+            $utang['last_utang_paid'] = unix_to_human(now(), true, 'europe');
 
+            // unset paid_amount karena gaakan dimasukin ke db, hanya untuk proses di controller ini
+            unset($input['left_to_paid']);
+            // pprint($input);
+            // pprintd($utang);
+
+            $this->db->trans_start();
+            $insert  = $this->admin->insert('barang_keluar', $input);
+            $insert2 = $this->admin->update('customer', 'id', $input['id_customer'], $utang);
+            
             $id_barang_keluar = $this->input->post('id_barang_keluar');
             $this->admin->simpan_cart($id_barang_keluar);
             $this->cart->destroy();
-
+            $this->db->trans_complete();
+            
             // var_dump($input);
-
-            if ($insert) {
+            if ($this->db->trans_status() === FALSE)
+            {
+                log_message('error', 'Data masukkan error pada controller Barangkeluar/add.');
+                set_pesan('Opps ada kesalahan!');
+                redirect('barangkeluar/add');
+            } else {
                 if (isset($kembalian)) {
                     set_pesan('data berhasil disimpan. <br>TOTAL KEMBALIAN: Rp.' . number_format($kembalian, 0, ',', '.'));
                 } else {
                     set_pesan('data berhasil disimpan.');
                 }
                 redirect('barangkeluar');
-            } else {
-                set_pesan('Opps ada kesalahan!');
-                redirect('barangkeluar/add');
             }
         }
     }
