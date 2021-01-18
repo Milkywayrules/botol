@@ -84,7 +84,7 @@ class Admin_model extends CI_Model
     {
         if ($getTotal != null) {
             if ($getTotal['mode'] == 'omzet') {
-                return $this->db->query("
+                $allGrandTtotal = $this->db->query("
                     SELECT SUM(`paid_amount`) AS total_omzet
                     FROM `barang_keluar` `bk` 
                     JOIN `user` `u` 
@@ -93,8 +93,16 @@ class Admin_model extends CI_Model
                     ON `bk`.`id_customer` = `c`.`id` 
                     WHERE `tanggal_keluar` >= '{$range['mulai']}'
                     AND `tanggal_keluar` <= '{$range['akhir']}'
-                ")->row_array();
-            } elseif ($getTotal['mode'] == 'perproduk') {
+                ")->row()->total_omzet;
+
+                $allUtang = $this->db->query("
+                    SELECT SUM(`total_utang`) AS total_utang
+                    FROM `customer` `c` 
+                ")->row()->total_utang;
+                
+                return $x['total_omzet'] = $allGrandTtotal + $allUtang;
+            } 
+            elseif ($getTotal['mode'] == 'perproduk') {
                 return $this->db->query("
                     SELECT `bkd`.`barang_id`, `b`.`nama_barang`, SUM(`bkd`.`jumlah_keluar`) AS `total_qty`, `sat`.`nama_satuan`, SUM(`bkd`.`total_nominal_dtl`) AS `total_omzet`
                     FROM `barang_keluar_dtl` `bkd`
@@ -120,10 +128,10 @@ class Admin_model extends CI_Model
         }
 
         if ($where != null) {
-            $this->db->select('bk.id_barang_keluar, bk.tanggal_keluar, u.nama, c.id cust_id, c.fullname, c.phone, c.address, bk.nama_penerima, bk.alamat, bk.grand_total, bk.paid_amount, bk.left_to_paid, bk.payment');
+            $this->db->select('bk.id_barang_keluar, bk.tanggal_keluar, u.nama, c.id cust_id, c.fullname, c.phone, c.address, c.total_utang, bk.nama_penerima, bk.alamat, bk.grand_total, bk.paid_amount, bk.payment');
             return $this->db->get_where('barang_keluar bk', $where)->result_array();
         } else {
-            $this->db->select('bk.id_barang_keluar, bk.nama_penerima, bk.alamat, bk.tanggal_keluar, bk.payment, bk.grand_total, bk.left_to_paid, u.nama, c.id as cust_id, c.fullname, c.phone');
+            $this->db->select('bk.id_barang_keluar, bk.nama_penerima, bk.alamat, bk.tanggal_keluar, bk.payment, bk.grand_total, u.nama, c.id as cust_id, c.fullname, c.phone, c.total_utang');
             return $this->db->get('barang_keluar bk')->result_array();
         }
     }

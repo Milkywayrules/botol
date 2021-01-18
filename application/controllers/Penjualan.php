@@ -16,30 +16,45 @@ class Penjualan extends CI_Controller
     {
         // MULAI : reset kembali $container agar kosong untuk digunakan
         // proses di bawah sama seperti di atas, bedanya ini untuk total harga per item
+        // pprintd($dataOmzet);
         $container = [];
         $custId = '';
         $temp['total_omzet'] = 0;
         $i = 0;
         foreach ($dataOmzet as $row) {
+            // masuk ke sini pasti cuma iterasi pertama
             if ($custId == '') {
-                $custId = $row['cust_id'];
-                $temp['id']    = $row['cust_id'];
+                $custId     = $row['cust_id'];
+                $temp['id'] = $row['cust_id'];
+                // set utang dari db, hanya dipake sekali dari seluruh iterasi
+                $lastUtang = $row['total_utang'];
             }
             
+            // sisanya masuk ke sini
             if ($custId == $row['cust_id']) {
-                $temp['total_omzet'] = $temp['total_omzet'] + $row['paid_amount'];
+                // perhitungan total omzet diambil dari grand total transaksi
+                $temp['total_omzet'] = ($temp['total_omzet'] + $row['grand_total']) - $lastUtang;
                 $temp['total_omzet_formatted'] = price_format($temp['total_omzet'], FALSE);
             } else {
                 $i++;
-                $custId = $row['cust_id'];
-                $temp['id']    = $row['cust_id'];
-                $temp['total_omzet'] = $temp['total_omzet'] + $row['paid_amount'];
+                // reset total omzet jika ganti id customer
+                $temp['total_omzet'] = 0;
+                // reset lastUtang dengan yg terkait jika ganti id customer
+                $lastUtang  = $row['total_utang'];
+                // reset customer id
+                $custId     = $row['cust_id'];
+                $temp['id'] = $row['cust_id'];
+                // perhitungan total omzet diambil dari grand total transaksi
+                $temp['total_omzet'] = ($temp['total_omzet'] + $row['grand_total']) - $lastUtang;
                 $temp['total_omzet_formatted'] = price_format($temp['total_omzet'], FALSE);
             }
+            // set last utang jadi 0, karena setiap id customer hanya pake sekali
+            $lastUtang = 0;
             $container[$i] = $temp;
         }
         // SELESAI : kembalikan dari $container ke variabel awal
         $dataOmzet = $container;
+        // pprintd($dataOmzet);
 
         $whereIdCust = '';
         foreach ($dataOmzet as $row) {
@@ -97,9 +112,12 @@ class Penjualan extends CI_Controller
             $input = $this->input->post(null, true);
             // pprintd($input);
 
+            // jika ada customer yg dipilih
             if (isset($input['customer'])) {
+                // jika ada customer yg dipilih, tapi opsi all juga dipilih
                 if (isset($input['all'])) {
                     $listCust = null;
+                // jika hanya customer yg dipilih
                 } else {
                     $listCust = '';
                     foreach ($input['customer'] as $row) {
@@ -107,6 +125,7 @@ class Penjualan extends CI_Controller
                         $listCust .= 'id_customer='.$row;
                     }
                 }
+            // jika customer gaada yg dipilih (atau bahkan gaada satupun yg dipilih)
             } else {
                 $input['all'] = 'all';
                 $listCust = null;
@@ -123,8 +142,10 @@ class Penjualan extends CI_Controller
                 $akhir   = date('Y-m-d', strtotime(end($pecah)));
 
                 if (isset($input['all'])) {
-                    $data['master'][0]             = $this->admin->getOmzet(null, ['mulai'=>$mulai, 'akhir'=>$akhir], null, ['mode' => 'omzet']);
-                    $data['master'][0]['fullname'] = '[ Data Keseluruhan ]';
+                    $data['master'][0]['total_omzet'] = $this->admin->getOmzet(null, ['mulai'=>$mulai, 'akhir'=>$akhir], null, ['mode' => 'omzet']);
+                    $data['master'][0]['fullname']    = '[ Data Keseluruhan ]';
+                    // pprintd($data);
+
                     $data['date']['tanggal']    = $tanggal;
                     $data['date']['tgl_mulai']  = $mulai;
                     $data['date']['tgl_akhir']  = $akhir;

@@ -108,10 +108,6 @@ class Barangkeluar extends CI_Controller
                 // hitung sisa yg harus diabayar (hutang)
                 $input['left_to_paid']  = $input['grand_total'] - $input['paid_amount'];
             }
-
-            // if (isset($input['kembalian'])) {
-            //     echo "2312321312";
-            // }
             // pprintd($input);
 
             // ambil data utang si customer
@@ -126,15 +122,16 @@ class Barangkeluar extends CI_Controller
             // pprintd($utang);
 
             $this->db->trans_start();
+
             $insert  = $this->admin->insert('barang_keluar', $input);
             $insert2 = $this->admin->update('customer', 'id', $input['id_customer'], $utang);
             
             $id_barang_keluar = $this->input->post('id_barang_keluar');
             $this->admin->simpan_cart($id_barang_keluar);
             $this->cart->destroy();
+
             $this->db->trans_complete();
             
-            // var_dump($input);
             if ($this->db->trans_status() === FALSE)
             {
                 log_message('error', 'Data masukkan error pada controller Barangkeluar/add.');
