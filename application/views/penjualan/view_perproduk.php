@@ -36,6 +36,7 @@
                     <th>No.</th>
                     <th>ID Barang</th>
                     <th>Nama Barang</th>
+                    <th>Jumlah Barang</th>
                     <th>Total Omzet</th>
                 </tr>
             </thead>
@@ -49,6 +50,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= $row['barang_id']; ?></td>
                             <td><?= $row['nama_barang']; ?></td>
+                            <td><?= "{$row['total_qty']} {$row['nama_satuan']}" ?></td>
                             <td><?= price_format($row['total_omzet']) ?></td>
                         </tr>
                     <?php endforeach; ?>

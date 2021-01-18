@@ -73,10 +73,12 @@ class Admin_model extends CI_Model
                 ")->row_array();
             } elseif ($getTotal['mode'] == 'perproduk') {
                 return $this->db->query("
-                    SELECT `bkd`.`barang_id`, `b`.`nama_barang`, SUM(`bkd`.`total_nominal_dtl`) AS `total_omzet`
+                    SELECT `bkd`.`barang_id`, `b`.`nama_barang`, SUM(`bkd`.`jumlah_keluar`) AS `total_qty`, `sat`.`nama_satuan`, SUM(`bkd`.`total_nominal_dtl`) AS `total_omzet`
                     FROM `barang_keluar_dtl` `bkd`
                     JOIN `barang` `b`
                     ON `bkd`.`barang_id` = `b`.`id_barang`
+                    JOIN `satuan` `sat`
+                    ON `b`.`satuan_id` = `sat`.`id_satuan`
                     JOIN `barang_keluar` `bk`
                     ON `bkd`.`id_barang_keluar` = `bk`.`id_barang_keluar`
                     WHERE `tanggal_keluar` >= '{$range['mulai']}'

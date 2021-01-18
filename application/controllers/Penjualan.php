@@ -238,19 +238,21 @@ class Penjualan extends CI_Controller
 
             $pdf->SetFont('Arial', 'B', 9);
 
-            $pdf->Cell(10, 7, 'No.', 1, 0, 'C');
-            $pdf->Cell(30, 7, 'ID Barang', 1, 0, 'C');
-            $pdf->Cell(85, 7, 'Nama Barang', 1, 0, 'C');
-            $pdf->Cell(60, 7, 'Total Omzet', 1, 0, 'C');
+            $pdf->Cell(7, 7, 'No.', 1, 0, 'C');
+            $pdf->Cell(25, 7, 'ID Barang', 1, 0, 'C');
+            $pdf->Cell(75, 7, 'Nama Barang', 1, 0, 'C');
+            $pdf->Cell(35, 7, 'Jumlah Barang', 1, 0, 'C');
+            $pdf->Cell(45, 7, 'Total Omzet', 1, 0, 'C');
             $pdf->Ln();
 
             $no = 1;
             foreach ($data['master'] as $row) {
                 $pdf->SetFont('Arial', '', 10);
-                $pdf->Cell(10, 7, $no++ . '.', 1, 0, 'C');
-                $pdf->Cell(30, 7, $row['barang_id'], 1, 0, 'L');
-                $pdf->Cell(85, 7, $row['nama_barang'], 1, 0, 'L');
-                $pdf->Cell(60, 7, $row['total_omzet_formatted'], 1, 0, 'C');
+                $pdf->Cell(7, 7, $no++ . '.', 1, 0, 'C');
+                $pdf->Cell(25, 7, $row['barang_id'], 1, 0, 'L');
+                $pdf->Cell(75, 7, $row['nama_barang'], 1, 0, 'L');
+                $pdf->Cell(35, 7, "{$row['total_qty']} {$row['nama_satuan']}", 1, 0, 'C');
+                $pdf->Cell(45, 7, $row['total_omzet_formatted'], 1, 0, 'C');
                 $pdf->Ln();
             }
 
